@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTC-8">
+    <title>Burgs'RUs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./public/style.css">
+    < </head>
+
+<body>
+    {{{body}}}
+    <script type="text/javascript">
+        $(".devour").on("click", function (e) {
+            var id = $(this).attr("data-id")
+            console.log(id)
+
+            $.ajax("/api/burgers/" + id, {
+                type: "DELETE",
+            }).then(function () {
+                console.log("Burger devoured!")
+                location.reload()
+            })
+        });
+        $(".create-form").on("submit", function(event) {
+            event.preventDefault();
+            var burgName = $("#burg").val().trim()
+            var newBurg = {
+                burger_name: burgName
+            }
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: newBurg
+            }).then(
+                function() {
+                    console.log("created new burger");
+                    location.reload();
+                }
+            ).catch(function(err){
+                if(err) throw err;
+            })
+        })
+        </script>
+</body>
+
+</html>
